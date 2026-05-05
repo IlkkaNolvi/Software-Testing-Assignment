@@ -1,0 +1,77 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+
+# TODO: Write Dcocumentation e.g. Project Test scenario. CRUD Operation: Create, Read, Update, Delete
+
+Documentation	Project Test scenario. CRUD Operation: Create, Read, Update, Delete.
+
+# TODO: Write Precondition, Postcondition, Tags
+
+Pre Condition		Open Browser And Login To Application
+Post Condition		Close All Browsers
+Tags				Project, TS-3-Project
+
+#******************* Common Variables ********************
+
+*** Variables ***
+
+# NOTE: Please Remove your login credential before uploading Assignments
+
+# TODO: Write Project creation field variables
+
+NewProjectUrl		https://gitlab.com/projects/new
+BlankProjectUrl		https://gitlab.com/projects/new#blank_project
+TemplateProjectUrl	https://gitlab.com/projects/new#create_from_template
+ProjectName			First project
+TemplateName		My Template Project
+UpdatedProjectName	Updated Template Project
+
+
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# TODO: Write Positive and Negative Test Cases and Test Process steps
+
+# Positive Test examples are below write test process steps for each below test case
+
+Create blank project
+	Navigate To Page				${BlankProjectUrl}
+	Input Project name				${ProjectName}
+	Select Visibility Level			Private
+	Submit Create Project
+	Verify Page Should Contain		Project '${ProjectName}' was successfully created.
+
+Create template project
+	Navigate To Page				${TemplateProjectUrl}
+	Select Template					Ruby on Rails
+	Input Project name				${TemplateName}
+	Submit Create Project
+	Verify Page Should Contain		The project was succesfully imported.
+
+Update name of template project
+	Navigate To Project Settings	${TemplateName}
+	Input New Project name			${UpdatedProjectName}
+	Submit Save Changes
+	Verify Page Should Contain		Project ${UpdatedProjectName} was successfully updated.
+
+Delete template project
+	Navigate To Project Settings	${UpdatedProjectName}
+	Expand Advanced Settings
+	Click Delete
+	Confirm Deletion				${UpdatedProjectName}
+	Verify Page Should Contain		Project was successfully deleted.
+
+# Negative Test examples are below write test process steps for each below test case
+
+Create a blank project with the previous same name
+	Navigate To Page				${BlankProjectUrl}
+	Input Project name				${ProjectName}
+	Select Visibility Level			Private
+	Submit Create Project
+	Verify Page Should Contain		Name has already been taken
+
+

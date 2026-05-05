@@ -1,0 +1,63 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+Documentation	Issue Test scenario. CRUD Operation: Create, Read, Update, Delete
+
+# TODO: Write Precondition and Postcondition, Tags 
+
+Pre Condition		Open Browser, Login, and Navigate to an existing project. Tips: Project must be created by the user before.
+Post Condition		Close All Browsers
+Tags				Issue, TS-4-Issue
+
+#******************* Common Variables ********************
+
+
+*** Variables ***
+
+# NOTE: Please Remove your login credential before uploading Assignments
+
+# TODO: Write Issue creation field variables, Updated name of the issue
+IssueTitle			First Issue
+IssueDescription	This is the description for the first issue.
+UpdatedIssueTitle	Updated First Issue
+SecondIssueTitle	Updated First Issue
+
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# TODO: Write Positive Test Cases and Test Process steps
+
+# Positive Test examples are below write test process steps for each below test case
+
+Create issue
+	Navigate To New Issue Page
+	Input Issue title				${IssueTitle}
+	Input Issue description			${IssueDescription}
+	Submit Create Issue
+	Verify Page Should Contain		Issue created.
+	Verify Issue Title is			${IssueTitle}
+
+Update name of issue
+	Navigate To Issue Edit Page		${IssueTitle}
+	Input Issue title				${UpdatedIssueTitle}
+	Submit Save Changes
+	Verify Page Should Contain		Issue was successfully updated.
+	Verify Issue Title is			${UpdatedIssueTitle}
+
+Create second issue with privious updated name
+	Navigate To New Issue Page
+	Input Issue title				${SecondIssueTitle}
+	Input Issue Description			This is a duplicate title issue.
+	Submit Create Issue
+	Verify Page Should Contain		Issue created.
+	Verify Issue Title is			${SecondIssueTitle}
+
+Delete first issue
+	Navigate To Issue Page			${UpdatedIssueTitle}
+	Click Edit Issue
+	Click Delete Issue
+	Confirm Deletion
+	Verify Page Should Contain		Issue was successfully deleted.
